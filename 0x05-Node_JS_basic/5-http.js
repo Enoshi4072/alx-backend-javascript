@@ -1,54 +1,53 @@
+const http = require('http');
 const fs = require('fs');
 
-// Define the countStudents function
-function countStudents(path) {
-    // Return a promise to handle asynchronous operations
-    return new Promise((resolve, reject) => {
-        // Read the file asynchronously
-        fs.readFile(path, 'utf8', (error, data) => {
-            if (error) {
-                // If an error occurs, reject the promise with an error message
-                reject(new Error('Cannot load the database'));
-            } else {
-                // Split the data into lines and remove empty lines
-                const lines = data.split('\n').filter(line => line.trim() !== '');
-                // Remove the header line
-                lines.shift();
+const PORT = 1245;
 
-                const students = [];
-                const fields = {};
+const app = http.createServer((req, res) => {
+  if (req.url === '/') {
+    // Handling request for the root URL
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello Holberton School!');
+  } else if (req.url === '/students') {
+    // Handling request for /students URL
+    fs.readFile('database.csv', 'utf8', (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Cannot load the database');
+        throw new Error('Cannot load the database');
+      }
 
-                // Iterate through each line (student record)
-                lines.forEach(line => {
-                    const [firstname, lastname, age, field] = line.split(',').map(item => item.trim());
-                    // Skip empty lines or lines with less than 4 fields
-                    if (firstname && lastname && age && field) {
-                        students.push({ firstname, lastname, age, field });
+      const students = data.trim().split('\n').filter((line) => line.trim() !== '');
+      const fields = {};
 
-                        // If the field is encountered for the first time, initialize it with an empty array
-                        if (!fields[field]) {
-                            fields[field] = [];
-                        }
-                        // Add the student's firstname to the array corresponding to their field
-                        fields[field].push(firstname);
-                    }
-                });
+      students.shift(); // Remove header line
 
-                // Log the total number of students
-                console.log(`Number of students: ${students.length}`);
+      students.forEach((student) => {
+        const [firstname, , , field] = student.split(','); // Removed 'lastname' and 'age' since they are not used
+        if (!fields[field]) {
+          fields[field] = [];
+        }
+        fields[field].push(`${firstname} `);
+      });
+      let response = `This is the list of our students\nNumber of students: ${students.length}\n`;
+      for (const field in fields) {
+        if (Object.prototype.hasOwnProperty.call(fields, field)) {
+          response += `Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}`;
+        }
+      }
 
-                // Log the number of students in each field
-                for (const field in fields) {
-                    const list = fields[field].join(', ');
-                    console.log(`Number of students in ${field}: ${fields[field].length}. List: ${list}`);
-                }
-
-                // Resolve the promise
-                resolve();
-            }
-        });
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end(response);
     });
-}
+  } else {
+    // Handling other URLs
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('Page not found');
+  }
+});
 
-// Export the countStudents function
-module.exports = countStudents;
+app.listen(PORT, () => {
+  console.log(`Server listening on PORT ${PORT}`);
+});
+
+module.exports = app;
