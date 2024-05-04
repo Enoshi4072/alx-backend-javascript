@@ -10,7 +10,8 @@ const app = http.createServer((req, res) => {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
     // Handling request for /students URL
-    fs.readFile('database.csv', 'utf8', (err, data) => {
+    const databaseFile = process.argv[2]; // Get the database file from command line arguments
+    fs.readFile(databaseFile, 'utf8', (err, data) => {
       if (err) {
         res.writeHead(500, { 'Content-Type': 'text/plain' });
         res.end('Cannot load the database');
