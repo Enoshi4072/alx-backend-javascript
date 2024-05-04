@@ -24,7 +24,7 @@ app.get('/students', (req, res) => {
         if (!fields[field]) {
           fields[field] = [];
         }
-        fields[field].push(`${firstname} `);
+        fields[field].push(`${firstname}`);
       });
 
       let response = `This is the list of our students\nNumber of students: ${students.length}\n`;
