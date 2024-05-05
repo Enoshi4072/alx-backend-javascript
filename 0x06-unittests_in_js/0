@@ -1,0 +1,11 @@
+// Install mocha using npm
+// You have to use assert
+// Create a new file named 0-calcul.js
+// Accept two args (number) a and b
+// Function should round a and b and return the sum of it
+// Create a file 0-calcul.test.js that conatins test cases of this function
+// Assume a and b are always a number
+// Tests should be around the rounded object part
+// You have to use assert
+// You should be able to run the test suite using npm test 0-calcul.test.js
+// Every test should pass without warning
