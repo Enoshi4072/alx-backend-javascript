@@ -1,0 +1,14 @@
+// Create a new file named 1-calcul.js
+// Upgrade the function created in the prev task
+// Add a new arg named type at first argument of the function. type can be SUM, SUBSTRACT OR DIVIDE (string)
+// When type is SUM, round the two nums and add a and b
+// When type is SUBTRACT, round the two numbers and subtract b from a
+// When type is DIVIDE, round the two numbers and divide a with b - if the rounded value of b is equal to 0, return the string Error
+TEST CASES
+// Create a file 1-calcul.test.js that contains test cases of this function
+// Assume a and b are always number
+// Usage of describe will help you to organize the test cases
+REQUIREMENTS
+// Use assert
+// Run the test suite using npm test 1-calcul.test.js
+// Every test should pass without warning

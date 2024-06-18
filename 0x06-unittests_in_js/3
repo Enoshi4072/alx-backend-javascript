@@ -1,0 +1,18 @@
+//Spies arw a userful wrapper that will execue the wrapped function and log useful informationexample, was it called,with what arguments. Sinon is a library that allows one to create spies
+// Lets install Sinon with npm
+1. Create a new file named utils.js
+2. create a new module named utils
+3. Create a property named calculateNumber and paste your previous code in the function
+4. EXport the Utils module
+// Create a new function named sendPaymentRequestToApi. The function takes two args: total amount and totalShipping
+// The function calls the Utils.calculateNumber function with type SUM, totalAmount as b, and displays in the console the message The total is: <result of the sum>
+// Create  a new file named 3-payment.test.js and add a new suite named sendPaymentRequestToApi:
+// By using sinon.spy make sure the math used for sendPaymentRequestToApi(100, 20) is the same as Utils.calculateNumber('SUM', 100, 20) valudate the usage of the utils function
+REQUIREMENTS
+- Be able to run the test suite using npm test 3-payment.test.js
+- Every test should pass without warning
+- Use a spy to cmplete the exercise
+TIPS
+- Restore a spy after using it in a test
+- Spies help if one wants to know what the code is doing not downstream APIs or functions
+- Remember
