@@ -1,0 +1,48 @@
+const fs = require('fs');
+
+function countStudents(path) {
+  try {
+    const data = fs.readFileSync(path, 'utf8').split('\n');
+
+    // Remove empty lines and trim spaces from each line.
+    const filteredData = data.filter((line) => line.trim() !== '');
+
+    // Remove the header line from the data.
+    filteredData.shift(); // Remove the header line.
+
+    // Split each line into an array of values (assuming CSV format).
+    const students = filteredData.map((line) => line.split(','));
+
+    const fields = {};
+
+    // Iterate through each student record.
+    students.forEach((student) => {
+      // Extract the field from the student record (assuming it's the fourth column).
+      const field = student[3].trim();
+
+      // If the field is encountered for the first time, initialize it with an empty array.
+      if (fields[field] === undefined) {
+        fields[field] = [];
+      }
+
+      // Add the student's first name to the array corresponding to their field.
+      fields[field].push(student[0]);
+    });
+
+    // Log the total number of students.
+    console.log(`Number of students: ${students.length}`);
+
+    // Iterate through each field in the 'fields' object.
+    for (const field in fields) {
+      // Join the list of first names for the students in the current field.
+      const list = fields[field].join(', ');
+
+      // Log the number of students and their first names in the current field.
+      console.log(`Number of students in ${field}: ${fields[field].length}. List: ${list}`);
+    }
+  } catch (error) {
+    throw new Error('Cannot load the database');
+  }
+}
+
+module.exports = countStudents;
