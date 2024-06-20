@@ -1,0 +1,8 @@
+//Lots of behaviors prefer to have a behavior driven development style
+// It easier to read and maintain
+// Install chai with npm
+- Copy the prev file to a new file
+- Copy the prev file to a new file
+- Re write the test suite using expect from chai
+//Requirements
+// You should be able to run the test wiote
